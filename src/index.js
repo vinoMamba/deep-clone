@@ -7,6 +7,15 @@ function deepClone(source) {
                 dist[k] = deepClone(source[k])
             }
             return dist
+        } else if (source instanceof Function) {
+            const dist = function () {
+                return source.apply(this, arguments)
+            }
+            for (let k in source) {
+                dist[k] = deepClone(source[k])
+            }
+            return dist
+
         } else {
             const dist = new Object()
             for (let k in source) {

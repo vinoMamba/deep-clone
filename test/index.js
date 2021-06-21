@@ -50,5 +50,17 @@ describe('deepClone', () => {
             assert(a[1] !== b[1])
             assert.deepEqual(a, b)
         });
+        it('能够复制函数', () => {
+            const a = function (x, y) {
+                return x + y
+            }
+            a.user = {name: 'vino', age: 21}
+            const b = deepClone(a)
+            assert(a !== b)
+            assert(a.user !== b.user)
+            assert(a.user.name === b.user.name)
+            assert(a.user.age === b.user.age)
+            assert(a(1, 2) === b(1, 2))
+        });
     })
 })
