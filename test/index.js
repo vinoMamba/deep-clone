@@ -42,5 +42,13 @@ describe('deepClone', () => {
             assert(a.child !== b.child)
             assert(a.child.name === b.child.name)
         });
+        it('能够复制数组对象', () => {
+            const a = [1, [2, 3, 4]]
+            const b = deepClone(a)
+            assert(a !== b)
+            assert(a[0] === b[0])
+            assert(a[1] !== b[1])
+            assert.deepEqual(a, b)
+        });
     })
 })
