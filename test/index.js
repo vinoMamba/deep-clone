@@ -62,5 +62,13 @@ describe('deepClone', () => {
             assert(a.user.age === b.user.age)
             assert(a(1, 2) === b(1, 2))
         });
+        it('能够复制出现环状引用的对象', () => {
+            const a = {name: 'vino'}
+            a.self = a
+            const b = deepClone(a)
+            assert(a !== b)
+            assert(a.name === b.name)
+            assert(a.self !== b.self)
+        });
     })
 })
