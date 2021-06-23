@@ -83,5 +83,18 @@ describe('deepClone', () => {
             assert(a !== a2)
             assert(a.child !== a2.child)
         })
+        it('可以复制正则表达式', () => {
+            const a = /hi\d+/gi
+            const a2 = deepClone(a)
+            assert(a.source === a2.source)
+            assert(a.flags === a2.flags)
+            console.assert(a !== a2)
+        });
+        it('可以复制日期', () => {
+            const a = new Date()
+            const a2 = deepClone(a)
+            console.assert(a !== a2)
+            assert(a.getTime() === a2.getTime())
+        });
     })
 })
