@@ -105,5 +105,67 @@ describe('deepClone', () => {
             assert(a.xxx.yyy.zzz === b.xxx.yyy.zzz)
             assert(a.xxx !== b.xxx)
         })
+        it('很复杂的对象', () => {
+            const a = {
+                n: NaN,
+                s: '',
+                n2: Infinity,
+                null: null,
+                u: undefined,
+                sym: Symbol(),
+                o: {
+                    n: NaN,
+                    s: '',
+                    n2: Infinity,
+                    null: null,
+                    u: undefined,
+                    sym: Symbol(),
+                },
+                array: [
+                    {
+                        n: NaN,
+                        s: '',
+                        n2: Infinity,
+                        null: null,
+                        u: undefined,
+                        sym: Symbol(),
+                    }
+                ],
+                fn: function () {
+                    return 'f1'
+                },
+                date: new Date(),
+                reg: /test/gi
+            }
+            const b = deepClone(a)
+            assert(a !== b)
+            assert.isNaN(b.n)
+            assert(a.s === b.s)
+            assert(a.n2 === b.n2)
+            assert(a.null === b.null)
+            assert(a.u === b.u)
+            assert(a.sym === b.sym)
+            assert(a.o !== b.o)
+            assert.isNaN(b.o.n)
+            assert(a.o.s === b.o.s)
+            assert(a.o.n2 === b.o.n2)
+            assert(a.o.null === b.o.null)
+            assert(a.o.u === b.o.u)
+            assert(a.o.sym === b.o.sym)
+            assert(a.array !== b.array)
+            assert.isNaN(a.array[0].n)
+            assert(a.array[0].s === b.array[0].s)
+            assert(a.array[0].n2 === b.array[0].n2)
+            assert(a.array[0].null === b.array[0].null)
+            assert(a.array[0].u === b.array[0].u)
+            assert(a.array[0].sym === b.array[0].sym)
+            assert(a.fn !== b.fn)
+            assert(a.fn() === b.fn())
+            assert(a.date !== b.date)
+            assert(a.date.getTime() === b.date.getTime())
+            assert(a.reg !== b.reg)
+            assert(a.reg.flags === b.reg.flags)
+            assert(a.reg.source === b.reg.source)
+        });
     })
 })
